@@ -1,0 +1,36 @@
+#!/usr/bin/env make
+
+.PHONY: clean cleanlatex cleanplots document latex plots venv
+
+clean : cleanlatex cleanplots cleanvenv
+
+cleanlatex :
+	-rm build.pdf
+	-rm document.pdf
+	-rm -rf ./latex/build
+
+cleanplots :
+	-rm ./latex/figures/*.pdf
+
+cleanvenv :
+	-rm -rf ./code/venv
+
+code/venv : code/requirements.txt
+	virtualenv code/venv -p=3.10
+	./code/venv/bin/python -m pip install --upgrade pip
+	./code/venv/bin/python -m pip install -r ./code/requirements.txt
+	@touch code/venv
+
+venv :
+	@$(MAKE) code/venv
+
+document : cleanlatex plots
+	cd latex && latexmk -pdf -f -view=none -interaction=nonstopmode -synctex=1 -shell-escape -bibtex -output-directory="build" "root.tex"
+	cp latex/build/root.pdf document.pdf
+
+latex : cleanlatex
+	mkdir -p latex/build && touch latex/build/root.pdf && ln -s latex/build/root.pdf build.pdf
+	cd latex && latexmk -pvc -pdf -view=none -interaction=nonstopmode -synctex=1 -shell-escape -bibtex -output-directory="build" "root.tex"
+
+plots : venv
+	./code/venv/bin/python ./code/plots.py
