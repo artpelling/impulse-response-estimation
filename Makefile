@@ -15,13 +15,21 @@ cleanplots :
 cleanvenv :
 	-rm -rf ./code/venv
 
+pyfar :
+	@$(MAKE) code/pyfar
+	@echo 'Checking for upstream changes ...'
+	@cd code/pyfar && git pull
+
+code/pyfar :
+	git clone -b toeplitz-deconvolution git@github.com:artpelling/pyfar.git code/pyfar
+
 code/venv : code/requirements.txt
 	virtualenv code/venv -p=3.10
 	./code/venv/bin/python -m pip install --upgrade pip
 	./code/venv/bin/python -m pip install -r ./code/requirements.txt
 	@touch code/venv
 
-venv :
+venv : pyfar
 	@$(MAKE) code/venv
 
 document : cleanlatex plots
