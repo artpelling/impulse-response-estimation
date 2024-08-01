@@ -21,7 +21,7 @@ files = {
 file = Path('../resources/rirs_simulated') / files['murakuni']
 ir = pf.io.read_audio(file)
 
-file = Path('/Users/pelling/data/fabian/SOFA/FABIAN_HRIR_measured_HATO_0.sofa')
+file = Path('/home/pelling/data/fabian/SOFA/FABIAN_HRIR_measured_HATO_0.sofa')
 ir = pf.io.read_sofa(file)[0][0,0]
 
 n = 500
@@ -34,8 +34,10 @@ hexp = pf.dsp.pad_zeros(hexp, n-hexp.n_samples)
 
 options = {'disp': True, 'gtol': 1e-8}
 hopt = solve_regularized_toeplitz_LS(u, y, tol=0, method='BFGS', options=options)
-pf.plot.time(hexp)
-pf.plot.time(hopt)
+
+pf.plot.time(ir-hexp)
+pf.plot.time(ir-hopt)
+#pf.plot.time(hopt)
 #plt.xlim(np.array((-1,5))/44100)
 #plt.ylim(np.array((-0.3,0.3))*1e-5)
 #plt.plot(ir.times, np.exp(-np.linspace(0,10,n)))

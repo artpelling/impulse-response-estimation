@@ -24,7 +24,7 @@ code/pyfar :
 	git clone -b toeplitz-deconvolution git@github.com:artpelling/pyfar.git code/pyfar
 
 code/venv : code/requirements.txt
-	virtualenv code/venv -p=3.10
+	python3 -m venv code/venv
 	./code/venv/bin/python -m pip install --upgrade pip
 	./code/venv/bin/python -m pip install -r ./code/requirements.txt
 	@touch code/venv
