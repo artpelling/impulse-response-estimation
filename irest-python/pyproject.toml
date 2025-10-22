@@ -9,7 +9,10 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "matplotlib>=3.10.7",
+    "numpy>=2.3.4",
+    "pyfar>=0.7.3",
     "pynufft>=2025.1.1",
+    "scipy>=1.16.2",
 ]
 
 [project.scripts]
