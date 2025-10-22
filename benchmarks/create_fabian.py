@@ -13,17 +13,21 @@
 
 def main():
     from irdl import get_fabian
+    import numpy as np
     from pathlib import Path
     import pyfar as pf
     from scipy.io import savemat
 
-    ir = get_fabian(kind="measured", hato=0)["impulse_response"]
-    sweep = pf.signals.exponential_sweep_freq(512, (20, 20000), 64, 192)
-    out = pf.dsp.convolve(ir, sweep, mode='cut')
+    ir = get_fabian(kind="measured", hato=0)["impulse_response"][0, 0]
+    sweep = pf.signals.exponential_sweep_time(ir.n_samples, (20, 20000))
+    sweep = pf.dsp.pad_zeros(sweep, ir.n_samples)
+    out = pf.dsp.convolve(ir, sweep, mode="cut")
     savemat(
         Path(__file__).parent / "data" / "fabian.mat",
         {
-            "h": ir.time[:, 0, 0],
+            "u": np.squeeze(sweep.time),
+            "y": np.squeeze(out.time),
+            "h": np.squeeze(ir.time),
             "fs": ir.sampling_rate,
         },
     )
