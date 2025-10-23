@@ -30,8 +30,6 @@ jobs:
         env:
           ALL_CHANGED_FILES: ${{ steps.benchmark-changed.outputs.all_changed_files }}
         run: |
-          echo ${{ALL_CHANGED_FILES}}
-          echo "files=${{ALL_CHANGED_FILES}}" >> $GITHUB_OUTPUT
           for file in ${ALL_CHANGED_FILES}; do
             echo "$file was changed"
           done
