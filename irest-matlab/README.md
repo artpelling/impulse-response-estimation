@@ -8,3 +8,11 @@ Stores shared libraries and functions. Currently, it contains the [RAIT library]
 ## Scripts
 - [`toy_example.m`](toy_example.m) Showcases the transformation chain to retrieve the IR from input/output data on a small LTI system with three poles.
 - [`fabian.m`](fabian.m) An example using a measured HRTF.
+
+## MATLAB
+
+### Figures
+
+![Toy example](./figures/toy.png)
+
+![Fabian](./figures/fabian.png)

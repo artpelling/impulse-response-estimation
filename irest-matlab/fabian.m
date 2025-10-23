@@ -67,3 +67,4 @@ grid on;
 xlabel("Discrete timestamps");
 ylabel("$| h - \hat{h}|$", 'Interpreter', 'latex');
 title("Absolute error");
+saveas(gcf, 'figures/fabian.png');
