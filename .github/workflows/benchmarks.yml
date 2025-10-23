@@ -65,7 +65,7 @@ jobs:
     name: Run MATLAB Scripts
     runs-on: ubuntu-latest
     needs: create-benchmarks
-    if: ${{ always() && !canceled() && (needs.changed-files.outputs.matlab || needs.changed-files.outputs.benchmarks) }}
+    if: ${{ always() && (needs.changed-files.outputs.matlab || needs.changed-files.outputs.benchmarks) }}
     steps:
       - uses: actions/checkout@v5
       - uses: matlab-actions/setup-matlab@v2
