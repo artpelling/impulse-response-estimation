@@ -17,7 +17,7 @@ y = data.y;
 M = length(u); % Initial number of (equidistant) sampling points on the boundary
 N = length(h_true); % final index of impulse response -> even for 512, we get numerical errors if we are not careful with computation
 n = 0:N-1;
-a = 0.4 + 1i*0.2; % Blaschke parameter (this determines the Laguerre system)
+a = 0.1 - 1i*0.2; % Blaschke parameter (this determines the Laguerre system)
 
 %% Callbacks
 B_inv_a = @(z) (z + a)./(1 + conj(a).*z); % For inverting the Blaschke-transformation
@@ -32,7 +32,8 @@ Y = fftshift(ifft(y))*M;
 % Again, this is a toy example, this should not be done like this, but I
 % want to show here that the pipeline works
 b = periodize_poles(a, N);
-c_lag = mt_coeffs(Y./U, b);
+L = mt_system(M, b).';
+c_lag = ((diag(U)*L)\Y.').';
 
 %% Use sequence of Laguerre coeffs as an impulse response and go to the Z domain
 angs = linspace(-pi, pi, N+1); angs(end) = [];
