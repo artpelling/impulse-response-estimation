@@ -26,7 +26,6 @@ jobs:
           files: |
             benchmarks/create_**.py
       - name: List all changed files
-        if: steps.changed-files.outputs.any_changed == 'true'
         env:
           ALL_CHANGED_FILES: ${{ steps.benchmark-changed.outputs.all_changed_files }}
         run: |
