@@ -23,4 +23,4 @@ jobs:
       - name: Run script
         uses: matlab-actions/run-command@v2
         with:
-          command: irest-matlab/toy_example.m
+          command: cd irest-matlab, toy_example
