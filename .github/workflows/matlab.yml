@@ -3,14 +3,14 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  my-job:
+  run-matlab:
     name: Run MATLAB Scripts
     runs-on: ubuntu-latest
     steps:
@@ -24,3 +24,14 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: cd irest-matlab, toy_example
+    commit-figures:
+      name: Commit Matlab Figures
+      runs-on: ubuntu-latest
+      needs: run-matlab
+      if: github.ref == 'refs/head/main'
+      steps:
+        - name: Commit Figures
+          uses: EndBug/add-and-commit@v9
+          with:
+            add: irest-matlab/figures
+            author_name: GitHub CI
