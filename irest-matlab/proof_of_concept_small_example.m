@@ -3,11 +3,11 @@ clear all;
 close all;
 
 %% Import libs for rational functions
-addpath("RAIT/");
+addpath("Common/RAIT/");
 
 %% Constants
 M = 5000; % Initial number of (equidistant) sampling points on the boundary
-N = 5000; % final index of impulse response -> even for 512, we get numerical errors if we are not careful with computation
+N = 512; % final index of impulse response -> even for 512, we get numerical errors if we are not careful with computation
 n = 0:N-1;
 a = 0.4 + 1i*0.2; % Blaschke parameter (this determines the Laguerre system)
 
