@@ -38,7 +38,7 @@ jobs:
     name: Create benchmark data
     runs-on: ubuntu-latest
     needs: changed-files
-    if: ${{ needs.changed-files.outputs.benchmarks }} != ''
+    if: ${{ needs.changed-files.outputs.benchmarks }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
