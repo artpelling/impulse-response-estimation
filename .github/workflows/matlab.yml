@@ -24,14 +24,25 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: cd irest-matlab, toy_example, fabian
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: matlab-figures
+          path: ./irest-matlab/figures
   commit-figures:
     name: Commit Matlab Figures
     runs-on: ubuntu-latest
     needs: run-matlab
     if: github.ref == 'refs/heads/main'
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: matlab-figures
+          path: ./irest-matlab/figures
       - name: Commit Figures
         uses: EndBug/add-and-commit@v9
         with:
-          add: irest-matlab/figures
-          author_name: GitHub CI
+          add: ./irest-matlab/figures
