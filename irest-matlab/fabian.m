@@ -17,7 +17,7 @@ y = data.y;
 M = length(u); % Initial number of (equidistant) sampling points on the boundary
 N = length(h_true); % final index of impulse response -> even for 512, we get numerical errors if we are not careful with computation
 n = 0:N-1;
-a = 0.1 - 1i*0.2; % Blaschke parameter (this determines the Laguerre system)
+a = 0.2; % Blaschke parameter (this determines the Laguerre system)
 
 %% Callbacks
 B_inv_a = @(z) (z + a)./(1 + conj(a).*z); % For inverting the Blaschke-transformation

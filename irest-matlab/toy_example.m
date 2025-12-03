@@ -9,7 +9,7 @@ addpath("Common/RAIT/");
 M = 5000; % Initial number of (equidistant) sampling points on the boundary
 N = 512; % final index of impulse response -> even for 512, we get numerical errors if we are not careful with computation
 n = 0:N-1;
-a = 0.4 + 1i*0.2; % Blaschke parameter (this determines the Laguerre system)
+a = 0; % Blaschke parameter (this determines the Laguerre system)
 
 %% Callbacks
 B_inv_a = @(z) (z + a)./(1 + conj(a).*z); % For inverting the Blaschke-transformation
@@ -34,7 +34,10 @@ z = exp(1i*f); % Sampling points on the Torus
 % on the grid by the frequencies f. We can also do this with other input
 % choices, but I wanted to be sure that I did everything correctly here.
 r = 0.9;
-U = fftshift(ifft(r.^(0:M-1)))*M;
+u = r.^(0:M-1);
+h_true_long = sum( c.*conj(alpha).^(0:M-1) );
+y = conv(h_true_long, u, "same");
+U = fftshift(ifft(u))*M;
 
 % OPTIONAL: We can check the input has been generated correctly witht the
 % below formulas
